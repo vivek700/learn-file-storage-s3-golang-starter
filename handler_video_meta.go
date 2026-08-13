@@ -95,6 +95,12 @@ func (cfg *apiConfig) handlerVideoGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// video, err = cfg.dbVideoToSignedVideo(video)
+	// if err != nil {
+	// 	respondWithError(w, http.StatusInternalServerError, "couln't assign video url", err)
+	// 	return
+	// }
+
 	respondWithJSON(w, http.StatusOK, video)
 }
 
@@ -111,10 +117,19 @@ func (cfg *apiConfig) handlerVideosRetrieve(w http.ResponseWriter, r *http.Reque
 	}
 
 	videos, err := cfg.db.GetVideos(userID)
+
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't retrieve videos", err)
 		return
 	}
 
+	// for i, video := range videos {
+	// 	videoWithPresignedURL, err := cfg.dbVideoToSignedVideo(video)
+	// 	if err != nil {
+	// 		respondWithError(w, http.StatusInternalServerError, "couln't assign video url", err)
+	// 		return
+	// 	}
+	// 	videos[i] = videoWithPresignedURL
+	// }
 	respondWithJSON(w, http.StatusOK, videos)
 }
